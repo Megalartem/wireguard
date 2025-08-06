@@ -17,7 +17,7 @@ services:
       - ALLOWEDIPS=0.0.0.0/0
       - LOG_CONFS=true
     volumes:
-      - /path/to/wireguard/config:/config:rw
+      - config:/config:rw
       - /lib/modules:/lib/modules:ro
     ports:
       - 51820:51820
