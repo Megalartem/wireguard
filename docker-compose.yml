@@ -17,8 +17,8 @@ services:
       - ALLOWEDIPS=0.0.0.0/0
       - LOG_CONFS=true
     volumes:
-      - ./config:/config:rw
-      - /lib/modules:/lib/modules:ro
+      - ./config:/config
+      - /lib/modules:/lib/modules
     ports:
       - 51820:51820
     sysctls:
