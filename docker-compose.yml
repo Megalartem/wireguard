@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:1.0.20250521
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Moscow
+      - SERVERURL=wireguard.just-in-time.pro
+      - SERVERPORT=51820
+      - PEERS=5
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0
+      - ALLOWEDIPS=0.0.0.0/0
+      - LOG_CONFS=true
+    volumes:
+      - /path/to/wireguard/config:/config:rw
+      - /lib/modules:/lib/modules:ro
+    ports:
+      - 51820:51820
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /run
+    healthcheck:
+      test: ["CMD", "pgrep", "wireguard"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
